@@ -1,13 +1,18 @@
-NAME=	so_long
+NAME=		solong
 
-CC=		gcc
+CC=			gcc
 
-SRCS=	minitest.c
+FLAGS=		-Wall -Wextra -Werror -g	
 
-OBJ=	$(SRCS:.c=.o)
+SRCS=		window.c
 
-%.o: %.c
-	@$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+OBJ_DIR=	obj
+
+OBJ=		$(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))
+
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 $(NAME): $(OBJ)
 	@echo "So long Marianne... Run it !"
@@ -16,7 +21,7 @@ $(NAME): $(OBJ)
 all : $(NAME)
 
 clean :
-	@rm -rf $(OBJ)
+	@rm -rf $(OBJ_DIR)/
 
 fclean : clean
 	@rm -rf $(NAME)
