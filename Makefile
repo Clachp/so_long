@@ -2,8 +2,8 @@ NAME=		solong
 
 CC=			gcc
 
-FLAGS=		-Wall -Wextra -Werror -g	
-
+CFLAGS=		-Wall -Wextra -Werror
+RM=			rm -rf
 SRCS=		window.c
 
 OBJ_DIR=	obj
@@ -12,18 +12,22 @@ OBJ=		$(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) -I. -I/usr/include -Imlx -O3 -c $< -o $@
 
 $(NAME): $(OBJ)
-	@echo "So long Marianne... Run it !"
-	@$(CC) -o $(NAME) $(OBJ) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
+#	make -C $(MLX)
+#	make -C $(LIBFT)
+	@echo "So long, Marianne"
+	@$(CC) -g3 -fsanitize=address -o $(NAME) $(OBJ) -I. -Imlx -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
 
 all : $(NAME)
 
 clean :
-	@rm -rf $(OBJ_DIR)/
+	@$(RM) $(OBJ_DIR)/
 
 fclean : clean
-	@rm -rf $(NAME)
+	@$(RM) $(NAME)
 
 re : fclean all
+
+#PHONY : all clean fclean re

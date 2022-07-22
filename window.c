@@ -6,37 +6,37 @@
 /*   By: cchapon <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:25:18 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/21 17:25:36 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/22 19:54:08 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-typedef struct s_data
+int	close_win(t_data *data)
 {
-	void	*mlx;
-	void	*win;
-}	t_data;
-
-int	close_win(int key, t_data *data)
-{
-	if (key == XK_Escape)
-	{
-		mlx_destroy_window(data->mlx, data->win);
-		mlx_loop_end(data->mlx);
-	}
+	mlx_loop_end(data->mlx);
+	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
+	exit(0);
 	return (0);
 }
 
 int main(void)
 {
-	t_data	window;
+	t_data	game;
+	t_tree	img;
 
-	window.mlx = mlx_init();
-	window.win = mlx_new_window(window.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, \
+	img.path = "./tree.xpm";
+	img.width = WIDTH;
+	img.height = HEIGHT;
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, \
 	"SO LONG");
-	mlx_hook(window.win, KeyPress, KeyPressMask, &close_win, &window);
-	mlx_loop(window.mlx);
-	mlx_destroy_display(window.mlx);
-	free(window.mlx);
+	img.img = mlx_xpm_file_to_image(game.mlx, img.path, &img.width, &img.height);
+	mlx_put_image_to_window(game.mlx, game.win, img.img, 0, 0);
+	mlx_key_hook(game.mlx, close_win, &game); 
+//	mlx_hook(game.win, 17, 1L<<2, close_win, &game);
+	mlx_loop(game.mlx);
+	return (0);
 }
