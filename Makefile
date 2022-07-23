@@ -4,7 +4,7 @@ CC=			gcc
 
 CFLAGS=		-Wall -Wextra -Werror
 RM=			rm -rf
-SRCS=		window.c
+SRCS=		window.c map.c
 
 OBJ_DIR=	obj
 
@@ -30,4 +30,4 @@ fclean : clean
 
 re : fclean all
 
-#PHONY : all clean fclean re
+PHONY : all clean fclean re
