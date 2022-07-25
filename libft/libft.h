@@ -18,6 +18,8 @@
 # include <stdint.h>
 # include <unistd.h>
 
+#define BUFFER_SIZE 100
+
 typedef struct s_list
 {
 	void			*content;
@@ -67,5 +69,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+char	*get_next_line(int fd);
+char	*ft_gnl_strjoin(char *s1, char *s2);
+int		to_end(char *s);
 
 #endif 

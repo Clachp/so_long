@@ -4,7 +4,7 @@ CC=			gcc
 
 CFLAGS=		-Wall -Wextra -Werror
 RM=			rm -rf
-SRCS=		window.c map.c
+SRCS=		main.c map.c
 
 OBJ_DIR=	obj
 
@@ -16,13 +16,14 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJ)
 #	make -C $(MLX)
-#	make -C $(LIBFT)
+	make -C libft
 	@echo "So long, Marianne"
-	@$(CC) -g3 -fsanitize=address -o $(NAME) $(OBJ) -I. -Imlx -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
+	@$(CC) -g3 -fsanitize=address -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
 
 all : $(NAME)
 
 clean :
+	@make fclean -C libft
 	@$(RM) $(OBJ_DIR)/
 
 fclean : clean

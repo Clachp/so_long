@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 16:10:36 by cchapon           #+#    #+#             */
-/*   Updated: 2022/06/13 16:56:53 by cchapon          ###   ########.fr       */
+/*   Created: 2022/06/01 16:35:51 by cchapon           #+#    #+#             */
+/*   Updated: 2022/06/13 16:44:02 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_gnl_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		i;
@@ -33,38 +33,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	str[i] = '\0';
 	free(s1);
 	return (str);
-}
-
-char	*ft_strdup(const char *s)
-{
-	size_t	i;
-	char	*str;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	str = malloc(ft_strlen(s) + 1);
-	if (!str)
-		return (NULL);
-	while (i < ft_strlen(s))
-	{
-		*(str + i) = *(s + i);
-		i++;
-	}
-	*(str + i) = '\0';
-	return (str);
-}
-
-size_t	ft_strlen(const char *str)
-{
-	int	l;
-
-	l = 0;
-	if (str == NULL)
-		return (0);
-	while (str[l])
-		l++;
-	return (l);
 }
 
 int	to_end(char *s)

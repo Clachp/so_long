@@ -37,7 +37,9 @@ SRC = ft_memset.c \
      ft_putnbr_fd.c \
      ft_strmapi.c \
      ft_striteri.c  \
-     ft_split.c
+     ft_split.c \
+     get_next_line.c \
+     get_next_line_utils.c
 
 BONUS_SRC = ft_lstnew.c \
     ft_lstadd_front.c \

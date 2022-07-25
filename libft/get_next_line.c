@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 void	get_one_line(char *line, char *buff)
 {
@@ -42,14 +42,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	r = BUFFER_SIZE;
 	line = NULL;
-	line = ft_strjoin(line, buff);
+	line = ft_gnl_strjoin(line, buff);
 	while (to_end(line) == 0 && r == BUFFER_SIZE)
 	{
 		r = read(fd, buff, BUFFER_SIZE);
 		if (r < 0)
 			return (free(line), NULL);
 		buff[r] = '\0';
-		line = ft_strjoin(line, buff);
+		line = ft_gnl_strjoin(line, buff);
 	}
 	if (line[0] == 0)
 		return (free(line), NULL);

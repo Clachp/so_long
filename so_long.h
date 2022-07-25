@@ -6,7 +6,7 @@
 /*   By: cchapon <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/23 19:16:39 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/25 19:07:36 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 #include <X11/keysym.h>
 #include "mlx/mlx.h"
 #include "mlx/mlx_int.h"
-#include "lib/gnl/get_next_line.h"
+#include "libft/libft.h"
+#include <sys/types.h>
+#include <fcntl.h>
 
-#define WINDOW_WIDTH 200
-#define WINDOW_HEIGHT 160
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 typedef struct s_game
 {
@@ -31,6 +33,7 @@ typedef struct s_game
 	void	*img;
 	void	*path;
 	char	**map;
+	char	*line;
 	int		x;
 	int		y;
 	int		blanck;
@@ -40,6 +43,7 @@ typedef struct s_game
 	int		P;
 }	t_game; 
 
-int draw_map(t_game *game);
+char *get_map(char *file);
+int draw_map(t_game *game, char *file);
 
 #endif
