@@ -58,21 +58,21 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $^
-	ranlib $(NAME)
+	@ar rc $(NAME) $^
+	@ranlib $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 bonus : $(OBJ) $(BONUS_OBJ)
 	ar rc $(NAME) $^
 	ranlib $(NAME)
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

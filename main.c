@@ -6,7 +6,7 @@
 /*   By: cchapon <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:25:18 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/25 19:07:49 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:51:05 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,33 @@ int handle_key_hook(int key, t_game *data)
 	return (0);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 	t_game	*game;
 	
-	
 	game = (t_game*)malloc(sizeof (t_game));
-	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, \
-	"SO LONG");
-	game->line = get_map("./asset/map.ber");
-	mlx_key_hook(game->win, handle_key_hook, game); 
-	mlx_hook(game->win, 17, 1L<<2, close_win, game);
-	mlx_loop(game->mlx);
+	if (argc == 2)
+	{
+		game->mlx = mlx_init();
+		game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, TITLE);
+		draw_map(game, argv[1]);
+		game->map = get_map(argv[1]);
+		mlx_key_hook(game->win, handle_key_hook, game); 
+		mlx_hook(game->win, 17, 1L<<2, close_win, game);
+		mlx_loop(game->mlx);
+	}
+	else
+		printf("Wrong argument number !\n");
 	free(game);
-	return (0);
+	return(0);
 }
+
+/*int main (void)
+{
+	char*line;
+
+	line = get_map("./assets/map.ber");
+	printf("%s", line);
+	free(line);
+	return (0);
+}*/

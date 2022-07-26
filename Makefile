@@ -2,7 +2,7 @@ NAME=		solong
 
 CC=			gcc
 
-CFLAGS=		-Wall -Wextra -Werror
+CFLAGS=		-g3 -Wall -Wextra -Werror
 RM=			rm -rf
 SRCS=		main.c map.c
 
@@ -16,7 +16,7 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJ)
 #	make -C $(MLX)
-	make -C libft
+	@make -C libft
 	@echo "So long, Marianne"
 	@$(CC) -g3 -fsanitize=address -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
 

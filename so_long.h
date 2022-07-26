@@ -6,7 +6,7 @@
 /*   By: cchapon <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/25 19:07:36 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:51:08 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
+#define WIN_WIDTH 600
+#define WIN_HEIGHT 400
+#define TITLE "SO LONG"
 
 typedef struct s_game
 {
@@ -43,7 +44,8 @@ typedef struct s_game
 	int		P;
 }	t_game; 
 
-char *get_map(char *file);
+char **get_map(char *file);
 int draw_map(t_game *game, char *file);
+int get_height(char **map);
 
 #endif
