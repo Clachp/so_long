@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchapon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/26 17:46:17 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/27 18:35:23 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-size_t	get_height(char **map)
-{
-	size_t	i;
-
-	i = 0;
-	while (map[i] != NULL)
-		i++;
-	return (i);
-}
-
-/*char	*get_map(char *file)
-{
-	int 	fd;
-	char 	*line;
-	char	*temp;
-	
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	temp = get_next_line(fd);
-	line = ft_strdup(temp);
- 	free(temp);	
-	close(fd);
-	return (line);
-}*/
 
 char	**get_map(char *file)
 {
@@ -63,13 +37,6 @@ char	**get_map(char *file)
 	free(line);
 	close(fd);
 	return (map);
-}
-
-void get_image(t_game *game)
-{	
-	int	i;
-	
-	game->img= mlx_xpm_file_to_image(game->mlx, "./assets/tree.xpm", &i, &i);	
 }
 
 /*int draw_map(t_game *game, char *file)

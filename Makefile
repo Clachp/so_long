@@ -4,7 +4,7 @@ CC=			gcc
 
 CFLAGS=		-g3 -Wall -Wextra -Werror
 RM=			rm -rf
-SRCS=		main.c map.c
+SRCS=		main.c parse_map.c images.c
 
 OBJ_DIR=	obj
 

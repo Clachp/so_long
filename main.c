@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchapon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:25:18 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/26 17:51:05 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/27 18:53:57 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int main(int argc, char **argv)
 	{
 		game->mlx = mlx_init();
 		game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, TITLE);
-		draw_map(game, argv[1]);
-		game->map = get_map(argv[1]);
+		get_image(game);
+		init_map(game, argv[1]);
 		mlx_key_hook(game->win, handle_key_hook, game); 
 		mlx_hook(game->win, 17, 1L<<2, close_win, game);
 		mlx_loop(game->mlx);
