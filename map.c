@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/27 18:35:23 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/28 16:49:35 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,73 @@
 
 char	**get_map(char *file)
 {
-	int 	fd;
-	char 	**map;
+	int		fd;
 	char	*line;
-	int		y;
+	char	*stash;
 	
-	y = 0;
-	line = "";
-	map[y] = ft_strdup("");
+	if (check_argv(file) == 1)
+		return (ft_putstr_fd("Unvalid map or input\n", 1), NULL);
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	while (line != NULL)
+	if (fd < 1)
+		return(ft_putstr_fd("Error opening file in get_map\n", 1), NULL);
+	line = "";
+	stash = ft_strdup("");
+	while(line)
 	{
 		line = get_next_line(fd);
-		map[y] = ft_strdup(line);
-		printf("map[%d] = %s\n", y, map[y]);
- 		free(line);
-		y++;
+		if (!line || line[0] == '\n')
+			break;
+		stash = ft_strjoin(stash, line);
+		free(line);
 	}
-	printf("y = %d\n", y);
 	free(line);
 	close(fd);
-	return (map);
+	return(ft_split(stash, '\n'));
 }
 
-/*int draw_map(t_game *game, char *file)
+void init_map (t_game *game, char *file)
 {
-	size_t	x;
-	size_t	y;
-
+    game->map = get_map(file);
 	get_image(game);
-	game->line = get_map(file);
-	x = 0;
-	printf("len de game->line dans draw_map : %ld\n", ft_strlen(game->line));
-	while (x < ft_strlen(game->line) - 1)
+	get_window_size(game);
+	game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
+	put_images(game);    	
+}
+
+void free_map(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	mlx_destroy_window(game->mlx, game->win);
+	while (*(game->map + i))
 	{
-		mlx_put_image_to_window(game->mlx, game->win, game->img, x*40, 32);
-		x++;
+		printf("map ads : %p\n", &game->map + i);
+		free(game->map + i);
+		i++;
 	}
-	free(game->line);
-	return (0);
-}*/
-// **map n'est pas une string donc on ne peut pas utiliser ft_strlen
+}
 
-int draw_map(t_game *game, char *file)
+/*int main (int argc, char **argv)
 {
-	size_t	x;
-	size_t	y;
+	char **map = get_map(argv[1]);
+	size_t	x = 0;
+	size_t	y = 0;
 
-	get_image(game);
-	game->map = get_map(file);
-	y = 0;
-	while (y < get_height(game->map) - 1)
+	if (argc == 2)
 	{
-		x = 0;
-		while (x < ft_strlen(game->map[y]) - 1)
+		while (*(map + y) != NULL)
 		{
-			mlx_put_image_to_window(game->mlx, game->win, game->img, x*40, y*32);
-			x++;
+			x = 0;
+			while (*(*(map + y) + x))
+			{
+				printf("%c", *(*(map + y) + x));
+				x++;
+			}
+		printf("\n");
+			y++;
 		}
-		y++;
+		printf("y = %ld\n x = %ld\n", y, x);
 	}
-	return (0);
-}
+	return(0);
+}*/
