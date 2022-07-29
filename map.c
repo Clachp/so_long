@@ -18,8 +18,8 @@ char	**get_map(char *file)
 	char	*line;
 	char	*stash;
 	
-	if (check_argv(file) == 1)
-		return (ft_putstr_fd("Unvalid map or input\n", 1), NULL);
+	//if (check_argv(file) == 1)
+	//	return (ft_putstr_fd("Unvalid map or input\n", 1), NULL);
 	fd = open(file, O_RDONLY);
 	if (fd < 1)
 		return(ft_putstr_fd("Error opening file in get_map\n", 1), NULL);
@@ -41,10 +41,15 @@ char	**get_map(char *file)
 void init_map (t_game *game, char *file)
 {
     game->map = get_map(file);
-	get_image(game);
-	get_window_size(game);
-	game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
-	put_images(game);    	
+	if (check_walls(game->map) == 0)
+	{
+		get_image(game);
+		get_window_size(game);
+		game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
+		put_images(game);
+	}
+	else	
+		free(game->map);
 }
 
 void free_map(t_game *game)

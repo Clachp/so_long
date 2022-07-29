@@ -40,6 +40,8 @@ typedef struct s_game {
 	char	*line;
 	int		width;
 	int		height;
+	int		px;
+	int		py;
 	t_pic	grass;
 	t_pic	tree;
 	t_pic	shoe;
@@ -54,6 +56,6 @@ void init_map (t_game *game, char *file);
 int get_window_size(t_game *game);
 void put_images(t_game *game);
 void free_map(t_game *game);
-
+int check_walls(char **map);
 
 #endif
