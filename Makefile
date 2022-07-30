@@ -16,19 +16,20 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJ)
 #	make -C $(MLX)
-	@make -C libft
+	@make --no-print-directory -C libft
 	@echo "So long, Marianne"
 	@$(CC) -g3 -fsanitize=address -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
 
 all : $(NAME)
 
 clean :
-	@make fclean -C libft
+	@make --no-print-directory fclean -C libft
 	@$(RM) $(OBJ_DIR)/
 
 fclean : clean
 	@$(RM) $(NAME)
 
-re : fclean all
+re : fclean
+	@make --no-print-directory all
 
 PHONY : all clean fclean re

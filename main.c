@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:25:18 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/28 16:46:07 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/30 19:47:56 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	close_win(t_game *data)
 	mlx_loop_end(data->mlx);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
-	//free_map(data);
+	free_map(data);
 	free(data->mlx);
+	free(data);
 	exit(0);
 	return (0);
 }
@@ -37,14 +38,16 @@ int main(int argc, char **argv)
 	game = (t_game*)malloc(sizeof (t_game));
 	if (argc == 2)
 	{
-		game->mlx = mlx_init();
 		init_map(game, argv[1]);
 		mlx_key_hook(game->win, handle_key_hook, game); 
 		mlx_hook(game->win, 17, 1L<<2, close_win, game);
 		mlx_loop(game->mlx);
 	}
 	else
+	{
 		printf("Wrong argument number !\n");
-	free(game);
+		free(game);
+	}
+		
 	return(0);
 }

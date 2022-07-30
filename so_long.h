@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/28 15:48:14 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/30 19:36:16 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ typedef struct s_game {
 	char	*line;
 	int		width;
 	int		height;
-	int		px;
-	int		py;
+	int		player_x;
+	int		player_y;
+	int		coll;
+	int		exit;
 	t_pic	grass;
 	t_pic	tree;
 	t_pic	shoe;
@@ -56,6 +58,6 @@ void init_map (t_game *game, char *file);
 int get_window_size(t_game *game);
 void put_images(t_game *game);
 void free_map(t_game *game);
-int check_walls(char **map);
+int check_map(t_game *game);
 
 #endif

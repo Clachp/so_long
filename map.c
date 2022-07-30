@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/28 16:49:35 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/30 19:49:31 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ char	**get_map(char *file)
 
 void init_map (t_game *game, char *file)
 {
-    game->map = get_map(file);
-	if (check_walls(game->map) == 0)
+	game->mlx = mlx_init();
+	game->map = get_map(file);
+	if (check_map(game) == 0)
 	{
 		get_image(game);
 		get_window_size(game);
@@ -57,7 +58,7 @@ void free_map(t_game *game)
 	int	i;
 
 	i = 0;
-	mlx_destroy_window(game->mlx, game->win);
+	//mlx_destroy_window(game->mlx, game->win);
 	while (*(game->map + i))
 	{
 		printf("map ads : %p\n", &game->map + i);
