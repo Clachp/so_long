@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/30 19:36:16 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/31 18:49:25 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,34 @@ typedef struct s_pic {
 	char	*path;
 	int		width;
 	int		height;
+	int		nbr;
+	int 	x;
+	int		y;
 }	t_pic;
 
 typedef struct s_game {
 	void	*mlx;
 	void	*win;
-	void	*path;
 	char	**map;
-	char	*line;
 	int		width;
 	int		height;
-	int		player_x;
-	int		player_y;
-	int		coll;
-	int		exit;
-	t_pic	grass;
-	t_pic	tree;
-	t_pic	shoe;
+	t_pic	floor;
+	t_pic	wall;
+	t_pic	coll;
 	t_pic	ennemy;
-	t_pic	character;
+	t_pic	player;
+	t_pic	exit;
 }	t_game; 
 
 char **get_map(char *file);
 int draw_map(t_game *game, char *file);
 void get_image(t_game *game);
 void init_map (t_game *game, char *file);
-int get_window_size(t_game *game);
+int get_window(t_game *game);
 void put_images(t_game *game);
 void free_map(t_game *game);
 int check_map(t_game *game);
-
+void end_game(t_game *game);
+void destroy_images(t_game *game);
+int	close_win(t_game *data);
 #endif

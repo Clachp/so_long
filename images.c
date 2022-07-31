@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 17:14:07 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/28 15:44:39 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/31 18:50:27 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,27 @@
 
 void get_image(t_game *game)
 {	
-    game->grass.img = mlx_xpm_file_to_image(game->mlx, "./assets/grass.xpm", &game->grass.width, &game->grass.height);
-    game->tree.img = mlx_xpm_file_to_image(game->mlx, "./assets/tree.xpm", &game->tree.width, &game->tree.height);
-    game->shoe.img = mlx_xpm_file_to_image(game->mlx, "./assets/shoe.xpm", &game->shoe.width, &game->shoe.height);
-    game->character.img = mlx_xpm_file_to_image(game->mlx, "./assets/rafou.xpm", &game->character.width, &game->character.height);
-    game->ennemy.img = mlx_xpm_file_to_image(game->mlx, "./assets/venusaur.xpm", &game->ennemy.width, &game->ennemy.height);	
+        game->floor.img = mlx_xpm_file_to_image(game->mlx, "./assets/grass.xpm", \
+        &game->floor.width, &game->floor.height);
+        game->wall.img = mlx_xpm_file_to_image(game->mlx, "./assets/tree.xpm", \
+        &game->wall.width, &game->wall.height);
+        game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assets/shoe.xpm", \
+        &game->coll.width, &game->coll.height);
+        game->player.img = mlx_xpm_file_to_image(game->mlx, "./assets/rafou.xpm", \
+        &game->player.width, &game->player.height);
+        game->exit.img = mlx_xpm_file_to_image(game->mlx, "./assets/venusaur.xpm", \
+        &game->exit.width, &game->exit.height);
+        if (!game->floor.img || !game->wall.img || !game->coll.img || !game->player.img || !game->exit.img)
+            close_win(game);
+        printf ("Get images ok\n");
 }
+// SEGV s'il y a un probleme avec le chargement des images : erreur a gerer dans get-image 
 
-int get_window_size(t_game *game)
+int get_window(t_game *game)
 {
     int x;
     int y;
-    int *px;
-    int *py;
-    
-    px = &x;
-    py =&y;
+
     y = 0;
     x = 0;
 	while (*(game->map + y) != NULL)
@@ -37,13 +42,17 @@ int get_window_size(t_game *game)
 		x = 0;
 		while (*(*(game->map + y) + x))
 			x++;
+       // if(x != ft_strlen(game->map[y]))
+         //   return (ft_pustrs("Wrong map format", 1), 1);
 		y++;
 	}
     printf ("x = %d\ny = %d\n", x, y);
-    game->width = game->grass.width  * *px;
-    game->height = game->grass.height * *py;
+    game->width = game->floor.width  * x;
+    game->height = game->floor.height * y;
+    game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
     printf("game width : %d\n", game->width);
     printf("game height : %d\n", game->height);
+    printf("getwindow size ok");
     if (game->width <= game->height)
         return (1);
     return (0); 
@@ -61,15 +70,20 @@ void put_images(t_game *game)
         while (*(*(game->map + y) + x))
         {
             if(*(*(game->map + y) + x) == '0')
-                mlx_put_image_to_window(game->mlx, game->win, game->grass.img, x * game->grass.height, y * game->grass.width);
+                mlx_put_image_to_window(game->mlx, game->win, \
+                game->floor.img, x * game->floor.height, y * game->floor.width);
             if(*(*(game->map + y) + x) == '1')
-                mlx_put_image_to_window(game->mlx, game->win, game->tree.img, x * game->tree.width, y * game->tree.height);
+                mlx_put_image_to_window(game->mlx, game->win, \
+                game->wall.img, x * game->wall.width, y * game->wall.height);
 			if(*(*(game->map + y) + x) == 'P')
-                mlx_put_image_to_window(game->mlx, game->win, game->character.img, x * game->character.width, y * game->character.height);
+                mlx_put_image_to_window(game->mlx, game->win, \
+                game->player.img, x * game->player.width, y * game->player.height);
 			if(*(*(game->map + y) + x) == 'C')
-                mlx_put_image_to_window(game->mlx, game->win, game->shoe.img, x * game->shoe.width, y * game->shoe.height);
+                mlx_put_image_to_window(game->mlx, game->win, \
+                game->coll.img, x * game->coll.width, y * game->coll.height);
             if(*(*(game->map + y) + x) == 'E')
-                mlx_put_image_to_window(game->mlx, game->win, game->shoe.img, x * game->shoe.width, y * game->shoe.height);
+                mlx_put_image_to_window(game->mlx, game->win, \
+                game->exit.img, x * game->exit.width, y * game->exit.height);
             x++;
         }
         y++;
@@ -78,10 +92,16 @@ void put_images(t_game *game)
 
 void destroy_images(t_game *game)
 {
-    mlx_destroy_image(game->mlx, game->grass.img);
-    mlx_destroy_image(game->mlx, game->grass.img);
-    mlx_destroy_image(game->mlx, game->grass.img);
-    mlx_destroy_image(game->mlx, game->grass.img); 
+    if (game->floor.img)
+        mlx_destroy_image(game->mlx, game->floor.img);
+    if (game->wall.img)
+        mlx_destroy_image(game->mlx, game->wall.img);
+    if (game->player.img)
+        mlx_destroy_image(game->mlx, game->player.img);
+    if (game->coll.img)
+        mlx_destroy_image(game->mlx, game->coll.img);
+    if (game->exit.img)
+        mlx_destroy_image(game->mlx, game->exit.img);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/30 20:05:50 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/31 18:53:51 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int check_player_position (t_game *game)
 		{
 			if (*(*(game->map + y) + x) == 'P')
 			{
-				game->player_x = x;
-				game->player_y = y;
+				game->player.x = x;
+				game->player.y = y;
 				return (1);
 			}
 			x++;
@@ -85,30 +85,38 @@ int check_content(t_game *game)
     int y;
 
     y = 0;
-	game->coll = 0;
-	game->exit = 0;
+	game->coll.nbr = 0;
+	game->exit.nbr = 0;
     while (game->map && *(game->map + y))
 	{
 		x = 0;
 		while (*(*(game->map + y) + x))
 		{
 			if (*(*(game->map + y) + x) == 'C')
-				game->coll++;
+				game->coll.nbr++;
 			if (*(*(game->map + y) + x) == 'E')
-				game->exit++;
+				game->exit.nbr++;
 			x++;
 		}
 		y++;
 	}
-	if (check_player_position(game) == 0 || game->coll == 0 || game->exit == 0)
+	if (check_player_position(game) == 0 || game->coll.nbr == 0 || game->exit.nbr == 0)
 		return (ft_putstr_fd("Content missing\n", 1), 1);
 	return (ft_putstr_fd("Content OK\n", 1), 0);
 }
 
-/*int check_input(char *argv)
+int check_input(char *arg)
 {
-    
-}*/
+    char	*ber;
+
+	ber = ft_strnstr(arg, ".ber", ft_strlen(arg));
+	if (ber)
+	{
+		if (ber == arg + ft_strlen(arg) - 4)
+			return ;
+	}
+	return (ft_putstr("wrong input format", 1), 1);
+}
 
 int	check_map(t_game *game)
 {

@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/30 19:49:31 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/07/31 18:40:39 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ char	**get_map(char *file)
 
 void init_map (t_game *game, char *file)
 {
-	game->mlx = mlx_init();
 	game->map = get_map(file);
 	if (check_map(game) == 0)
 	{
 		get_image(game);
-		get_window_size(game);
-		game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
-		put_images(game);
+		get_window(game);
+		put_images(game);		
 	}
 	else	
 		free(game->map);
