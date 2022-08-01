@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/31 18:53:51 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/01 15:03:53 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int check_line (char *line)
 	while (line[i])
 	{
 		if (line[i] != '1')
-			return (1);	
+			return (1);
 		i++;	
 	}
 	return (0);
@@ -79,6 +79,13 @@ int check_player_position (t_game *game)
 	return (0);	
 }
 
+int check_char(char c)
+{
+	if (c != '1' && c != '0' && c != 'P' && c != 'C' && c != 'E')
+		return (1);
+	return (0);
+}
+
 int check_content(t_game *game)
 {
 	int x;
@@ -92,6 +99,8 @@ int check_content(t_game *game)
 		x = 0;
 		while (*(*(game->map + y) + x))
 		{
+			if (check_char(*(*(game->map + y) + x)) == 1)
+				return (1);
 			if (*(*(game->map + y) + x) == 'C')
 				game->coll.nbr++;
 			if (*(*(game->map + y) + x) == 'E')
@@ -113,9 +122,9 @@ int check_input(char *arg)
 	if (ber)
 	{
 		if (ber == arg + ft_strlen(arg) - 4)
-			return ;
+			return (0);
 	}
-	return (ft_putstr("wrong input format", 1), 1);
+	return (ft_putstr_fd("wrong input format", 1), 1);
 }
 
 int	check_map(t_game *game)

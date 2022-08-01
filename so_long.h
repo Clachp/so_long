@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/31 18:49:25 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/01 18:08:12 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ int draw_map(t_game *game, char *file);
 void get_image(t_game *game);
 void init_map (t_game *game, char *file);
 int get_window(t_game *game);
-void put_images(t_game *game);
-void free_map(t_game *game);
+int put_images(t_game *game);
+void free_map(char **map);
 int check_map(t_game *game);
 void end_game(t_game *game);
 void destroy_images(t_game *game);
 int	close_win(t_game *data);
+int	check_input(char *arg);
+int handle_key_hook(int key, t_game *data);
+
 #endif

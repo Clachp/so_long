@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 17:14:07 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/31 18:50:27 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/01 18:08:06 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int get_window(t_game *game)
     return (0); 
 }
 
-void put_images(t_game *game)
+int put_images(t_game *game)
 {
     int x;
     int y;
@@ -88,6 +88,7 @@ void put_images(t_game *game)
         }
         y++;
     }
+    return (0);
 }
 
 void destroy_images(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/07/31 18:40:39 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/01 12:59:11 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ char	**get_map(char *file)
 	int		fd;
 	char	*line;
 	char	*stash;
-	
-	//if (check_argv(file) == 1)
-	//	return (ft_putstr_fd("Unvalid map or input\n", 1), NULL);
+
 	fd = open(file, O_RDONLY);
 	if (fd < 1)
 		return(ft_putstr_fd("Error opening file in get_map\n", 1), NULL);
@@ -40,6 +38,11 @@ char	**get_map(char *file)
 
 void init_map (t_game *game, char *file)
 {
+	if (check_input(file) == 1)
+	{
+		ft_putstr_fd("Unvalid map or input\n", 1);
+		exit(0); 
+	}
 	game->map = get_map(file);
 	if (check_map(game) == 0)
 	{
@@ -47,21 +50,19 @@ void init_map (t_game *game, char *file)
 		get_window(game);
 		put_images(game);		
 	}
-	else	
-		free(game->map);
 }
 
-void free_map(t_game *game)
+void free_map(char **map)
 {
-	int	i;
+	int y;
+	int x;
 
-	i = 0;
-	//mlx_destroy_window(game->mlx, game->win);
-	while (*(game->map + i))
+	y = 0;
+	x = 0;
+	while (map[y][x])
 	{
-		printf("map ads : %p\n", &game->map + i);
-		free(game->map + i);
-		i++;
+		free(map[y]);
+		y++;
 	}
 }
 
