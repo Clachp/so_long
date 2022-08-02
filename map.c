@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/01 12:59:11 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:55:26 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void init_map (t_game *game, char *file)
 	game->map = get_map(file);
 	if (check_map(game) == 0)
 	{
-		get_image(game);
 		get_window(game);
 		put_images(game);		
 	}

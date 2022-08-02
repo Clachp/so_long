@@ -6,55 +6,49 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/01 18:04:21 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:38:41 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// move up : y--
-void move_right (t_game *game)
+int	move_right(t_game *game, int x, int y)
 {
-
-    int x;
-    int y;
-    
-    printf("x = %d y = %d\n", game->player.x, game->player.y);
-    x = game->player.x;
-    y = game->player.y;
-    x++;
-
-    if(*(*(game->map + y) + x) == '0')
-    {
-        *(*(game->map + y) + x) = 'P';
-        *(*(game->map + y) + x -1) = '0';
-        game->player.x++;
-        // game->player.y;
-    }
-/*    if(*(*(game->map + y) + x) == '1')
-
-    if(*(*(game->map + y) + x) == 'P')
-
-    if(*(*(game->map + y) + x) == 'C')
-
-    if(*(*(game->map + y) + x) == 'E')*/
+	printf("x = %d y = %d\n", game->player.x, game->player.y);
+	if (*(*(game->map + y) + x) == '1')
+		return (ft_putstr_fd("Wall !\n", 1), 1);
+	if (*(*(game->map + y) + x) == 'C')
+		game->coll.nbr--;
+	if (*(*(game->map + y) + x) == 'E' && game->coll.nbr == 0)
+		printf("You won !");
+	*(*(game->map + y) + x) = 'P';
+	*(*(game->map + game->player.y) + game->player.x) = '0';
+	return (0);
 }
-int handle_key_hook(int key, t_game *data)
+
+int	handle_key_hook(int key, t_game *game)
 {
 	if (key == XK_w || key == XK_W)
-    {
-        printf("go up\n");    
-    }		
+	{
+		if (move_right(game, game->player.x, game->player.y - 1) == 0)
+			game->player.y--;
+	}
 	if (key == XK_a || key == XK_A)
-		printf("go down\n");
+	{
+		if (move_right(game, game->player.x, game->player.y + 1) == 0)
+			game->player.y++;
+	}
 	if (key == XK_s || key == XK_S)
-		printf("go left\n");
-	if (key == XK_d ||key == XK_D)
-    {
-        printf("go right\n");
-       move_right(data);
-    }
-	if(key == XK_Escape)
-		close_win(data);
+	{
+		if (move_right(game, game->player.x - 1, game->player.y) == 0)
+			game->player.x--;
+	}
+	if (key == XK_d || key == XK_D)
+	{
+		if (move_right(game, game->player.x + 1, game->player.y) == 0)
+			game->player.x++;
+	}
+	if (key == XK_Escape)
+		close_win(game);
 	return (0);
 }
