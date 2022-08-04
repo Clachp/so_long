@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/01 18:08:12 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/04 17:30:39 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 typedef struct s_pic {
 	void	*img;
-	char	*path;
+	char	*addr;
 	int		width;
 	int		height;
 	int		nbr;
@@ -41,6 +41,7 @@ typedef struct s_game {
 	char	**map;
 	int		width;
 	int		height;
+	t_pic	img;
 	t_pic	floor;
 	t_pic	wall;
 	t_pic	coll;
@@ -51,7 +52,7 @@ typedef struct s_game {
 
 char **get_map(char *file);
 int draw_map(t_game *game, char *file);
-void get_image(t_game *game);
+int get_images(t_game *game);
 void init_map (t_game *game, char *file);
 int get_window(t_game *game);
 int put_images(t_game *game);

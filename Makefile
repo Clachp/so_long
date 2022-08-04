@@ -18,7 +18,7 @@ $(NAME): $(OBJ)
 #	make -C $(MLX)
 	@make --no-print-directory -C libft
 	@echo "So long, Marianne"
-	@$(CC) -g3 -fsanitize=address -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
+	@$(CC) -g3 -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
 
 all : $(NAME)
 

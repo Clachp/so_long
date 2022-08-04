@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/01 15:03:53 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/04 17:40:41 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,8 @@ int check_input(char *arg)
     char	*ber;
 
 	ber = ft_strnstr(arg, ".ber", ft_strlen(arg));
-	if (ber)
-	{
-		if (ber == arg + ft_strlen(arg) - 4)
-			return (0);
-	}
+	if (ber == arg + ft_strlen(arg) - 4)
+		return (0);
 	return (ft_putstr_fd("wrong input format", 1), 1);
 }
 
@@ -132,5 +129,5 @@ int	check_map(t_game *game)
 	if (check_walls(game->map) == 0 && check_content(game) == 0)
 		return (0);
 	else
-		return (ft_putstr_fd("Invalid map\n", 1), 1);
+		return (ft_putstr_fd("Invalid map\n", 1), 1);	
 }
