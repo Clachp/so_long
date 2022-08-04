@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   images.c                                           :+:      :+:    :+:   */
+/*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 17:14:07 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 17:31:02 by cchapon          ###   ########.fr       */
+/*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
+/*   Updated: 2022/08/04 19:41:01 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+char	**get_map(char *file)
+{
+	int		fd;
+	char	*line;
+	char	*stash;
+	char	**result;
+
+	if (check_input(file) == 1)
+		return (ft_putstr_fd("wrong input format\n", 1), NULL);
+	fd = open(file, O_RDONLY);
+	if (fd < 1)
+		return (ft_putstr_fd("Error opening file in get_map\n", 1), NULL);
+	line = "";
+	stash = ft_strdup("");
+	while (line)
+	{
+		line = get_next_line(fd);
+		if (!line || line[0] == '\n')
+			break ;
+		stash = ft_gnl_strjoin(stash, line);
+		free(line);
+	}
+	close(fd);
+	result = ft_split(stash, '\n');
+	free(stash);
+	return (result);
+}
 
 int	get_window(t_game *game)
 {
@@ -24,7 +52,8 @@ int	get_window(t_game *game)
 		x = 0;
 		while (*(*(game->map + y) + x))
 			x++;
-		if (game->map[y + 1] && ft_strlen(game->map[y]) != ft_strlen(game->map[y + 1]))
+		if (game->map[y + 1] && \
+		ft_strlen(game->map[y]) != ft_strlen(game->map[y + 1]))
 			return (ft_putstr_fd("unequal lines", 1), 1);
 		y++;
 	}
@@ -61,41 +90,11 @@ int	get_images(t_game *game)
 	return (0);
 }
 
-void	get_floor(t_game *game, int x, int y)
-{		
-	mlx_put_image_to_window(game->mlx, game->win, game->floor.img, \
-	x * game->floor.height, y * game->floor.width);
-}
-
-void	get_wall(t_game *game, int x, int y)
-{
-	mlx_put_image_to_window(game->mlx, game->win, \
-	game->wall.img, x * game->wall.width, y * game->wall.height);
-}
-
-void	get_player(t_game *game, int x, int y)
-{
-	mlx_put_image_to_window(game->mlx, game->win, game->player.img, \
-	x * game->player.width, y * game->player.height);
-}
-
-void	get_collectible(t_game *game, int x, int y)
-{
-	mlx_put_image_to_window(game->mlx, game->win, \
-	game->coll.img, x * game->coll.width, y * game->coll.height);
-}
-
-void	get_exit(t_game *game, int x, int y)
-{
-	mlx_put_image_to_window(game->mlx, game->win, \
-	game->exit.img, x * game->exit.width, y * game->exit.height);
-}
-
 int	put_images(t_game *game)
 {
 	int	x;
 	int	y;
- 
+
 	y = 0;
 	while (*(game->map + y))
 	{
@@ -119,11 +118,23 @@ int	put_images(t_game *game)
 	return (0);
 }
 
-void	destroy_images(t_game *game)
+void	init_map(t_game *game, char *file)
 {
-		mlx_destroy_image(game->mlx, game->floor.img);
-		mlx_destroy_image(game->mlx, game->wall.img);
-		mlx_destroy_image(game->mlx, game->player.img);
-		mlx_destroy_image(game->mlx, game->coll.img);
-		mlx_destroy_image(game->mlx, game->exit.img);
+	game->map = get_map(file);
+	if (!game->map)
+	{
+		printf("error getting map\n");
+		exit(1);
+	}	
+	if (check_map (game) == 1)
+	{
+		free_map(game->map);
+		exit(1);
+	}
+	if (check_map(game) == 0)
+	{
+		get_window(game);
+		get_images(game);
+		put_images(game);
+	}
 }

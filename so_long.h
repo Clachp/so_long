@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 17:30:39 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/04 20:10:27 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 typedef struct s_pic {
 	void	*img;
-	char	*addr;
 	int		width;
 	int		height;
 	int		nbr;
@@ -41,27 +40,29 @@ typedef struct s_game {
 	char	**map;
 	int		width;
 	int		height;
-	t_pic	img;
+	int		move;
 	t_pic	floor;
 	t_pic	wall;
 	t_pic	coll;
-	t_pic	ennemy;
 	t_pic	player;
 	t_pic	exit;
 }	t_game; 
 
-char **get_map(char *file);
-int draw_map(t_game *game, char *file);
-int get_images(t_game *game);
-void init_map (t_game *game, char *file);
-int get_window(t_game *game);
-int put_images(t_game *game);
-void free_map(char **map);
 int check_map(t_game *game);
-void end_game(t_game *game);
+int check_line (char *line);
+int check_char(char c);
+int check_input(char *file);
+int	put_images(t_game *game);
+void init_map (t_game *game, char *file);
+void handle_mlx_hooks(t_game *game);
+void free_map(char **map);
 void destroy_images(t_game *game);
-int	close_win(t_game *data);
-int	check_input(char *arg);
-int handle_key_hook(int key, t_game *data);
+void	destroy_window(t_game *game);
+int	close_game(t_game *game);
+void	get_floor(t_game *game, int x, int y);
+void	get_wall(t_game *game, int x, int y);
+void	get_player(t_game *game, int x, int y);
+void	get_collectible(t_game *game, int x, int y);
+void	get_exit(t_game *game, int x, int y);
 
 #endif

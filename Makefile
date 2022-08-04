@@ -3,8 +3,16 @@ NAME=		solong
 CC=			gcc
 
 CFLAGS=		-g3 -Wall -Wextra -Werror
+
 RM=			rm -rf
-SRCS=		main.c map.c images.c valid_map.c interactions.c
+
+SRCS=		main.c \
+			check_utils.c \
+			load_images.c \
+			check_map.c \
+			init_map.c \
+			interactions.c \
+			clean_game.c
 
 OBJ_DIR=	obj
 
@@ -15,7 +23,6 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -I. -I/usr/include -Imlx -O3 -c $< -o $@
 
 $(NAME): $(OBJ)
-#	make -C $(MLX)
 	@make --no-print-directory -C libft
 	@echo "So long, Marianne"
 	@$(CC) -g3 -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 

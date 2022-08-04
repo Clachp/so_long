@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 10:22:17 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/04 20:19:17 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ int	move_player(t_game *game, int x, int y)
 	if (*(*(game->map + y) + x) == 'C')
 		game->coll.nbr--;
 	if (*(*(game->map + y) + x) == 'E' && game->coll.nbr == 0)
-		printf("You won !");
+	{
+		printf("You won in %d moves!\n", game->move);
+		close_game(game);
+	}
 	*(*(game->map + y) + x) = 'P';
 	*(*(game->map + game->player.y) + game->player.x) = '0';
+	game->move++;
 	return (0);
 }
 
@@ -48,6 +52,13 @@ int	handle_key_hook(int key, t_game *game)
 			game->player.x++;
 	}
 	if (key == XK_Escape)
-		close_win(game);
+		close_game(game);
 	return (0);
+}
+
+void	handle_mlx_hooks(t_game *game)
+{
+	mlx_loop_hook(game->mlx, put_images, game);
+	mlx_key_hook(game->win, handle_key_hook, game);
+	mlx_hook(game->win, 17, 1L << 2, close_game, game);
 }

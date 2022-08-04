@@ -1,47 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/21 13:25:18 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 20:15:17 by cchapon          ###   ########.fr       */
+/*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
+/*   Updated: 2022/08/04 19:37:23 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	init_game(t_game *game, char *file)
+int	check_line(char *line)
 {
-	game->mlx = mlx_init();
-	game->move = 0;
-	init_map (game, file);
-	handle_mlx_hooks(game);
-	return (0);
-}
+	int	i;
 
-int	close_game(t_game *game)
-{
-	free_map(game->map);
-	destroy_images(game);
-	destroy_window(game);
-	mlx_loop_end(game->mlx);
-	free(game->mlx);
-	exit(0);
-	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-	if (argc == 2)
+	i = 0;
+	while (line[i])
 	{
-		init_game(&game, argv[1]);
-		mlx_loop(game.mlx);
+		if (line[i] != '1')
+			return (1);
+		i++;
 	}
-	else
-		printf("Wrong argument number !\n");
 	return (0);
+}
+
+int	check_char(char c)
+{
+	if (c != '1' && c != '0' && c != 'P' && c != 'C' && c != 'E')
+		return (1);
+	return (0);
+}
+
+int	check_input(char *file)
+{
+	char	*ber;
+
+	ber = ft_strnstr(file, ".ber", ft_strlen(file));
+	if (ber == file + ft_strlen(file) - 4)
+		return (0);
+	return (ft_putstr_fd("wrong input format", 1), 1);
 }
