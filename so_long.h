@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 20:10:27 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/05 17:09:25 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_game {
 	void	*mlx;
 	void	*win;
 	char	**map;
+	char	*file;
 	int		width;
 	int		height;
 	int		move;
@@ -51,7 +52,6 @@ typedef struct s_game {
 int check_map(t_game *game);
 int check_line (char *line);
 int check_char(char c);
-int check_input(char *file);
 int	put_images(t_game *game);
 void init_map (t_game *game, char *file);
 void handle_mlx_hooks(t_game *game);
@@ -64,5 +64,8 @@ void	get_wall(t_game *game, int x, int y);
 void	get_player(t_game *game, int x, int y);
 void	get_collectible(t_game *game, int x, int y);
 void	get_exit(t_game *game, int x, int y);
+void	throw_error(char *message);
+char	*check_input(char *input);
+int	check_equal_lines(char **map);
 
 #endif

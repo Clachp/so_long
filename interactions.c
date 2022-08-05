@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 20:19:17 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/05 17:14:06 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 int	move_player(t_game *game, int x, int y)
 {
 	if (*(*(game->map + y) + x) == '1')
-		return (ft_putstr_fd("Wall !\n", 1), 1);
+		throw_error("Wall !\n");
 	if (*(*(game->map + y) + x) == 'C')
 		game->coll.nbr--;
-	if (*(*(game->map + y) + x) == 'E' && game->coll.nbr == 0)
+	if (*(*(game->map + y) + x) == 'E')
 	{
-		printf("You won in %d moves!\n", game->move);
+		if (game->coll.nbr == 0)
+			printf("You won in %d moves!\n", game->move);
+		else
+			printf("you lost\n");
+		// lancer animation fin du jeu
 		close_game(game);
 	}
 	*(*(game->map + y) + x) = 'P';
 	*(*(game->map + game->player.y) + game->player.x) = '0';
 	game->move++;
+	printf("moves : %d\n", game->move);
 	return (0);
 }
 

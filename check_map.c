@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 19:49:56 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/05 18:48:16 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ int	check_walls(char **map)
 			if (*(*(map + y) + x + 1) == '\0' && *(*(map + y) + x) != '1')
 				return (1);
 			x++;
-		}	
+		}
+		if (map[y + 1] && (ft_strlen(map[y]) != ft_strlen(map[y + 1])))
+			return (1);	
 		y++;
 	}
 	if (check_line(*(map + y - 1)) == 1)
 		return (1);
-	return (ft_putstr_fd("walls ok\n", 1), 0);
+	return (0);
 }
 
 int	check_player_position(t_game *game)
@@ -59,6 +61,7 @@ int	check_player_position(t_game *game)
 		}
 		y++;
 	}
+	throw_error("Player missing\n");
 	return (0);
 }
 
@@ -85,16 +88,32 @@ int	check_content(t_game *game)
 		}
 		y++;
 	}
-	if (check_player_position(game) == 0 || game->coll.nbr == 0 \
-	|| game->exit.nbr == 0)
-		return (ft_putstr_fd("Content missing\n", 1), 1);
-	return (ft_putstr_fd("Content OK\n", 1), 0);
+	if (check_player_position(game) == 0)
+		return(1);
+	if (game->coll.nbr == 0)
+	{
+		throw_error("Collectibles missing\n");
+		return (1);
+	}
+	if (game->exit.nbr == 0)
+	{
+		throw_error("No exit in map\n");
+		return (1);
+	}
+	return (0);
+//fonction trop longue
 }
 
 int	check_map(t_game *game)
 {
-	if (check_walls(game->map) == 0 && check_content(game) == 0)
-		return (0);
-	else
-		return (ft_putstr_fd("Invalid map\n", 1), 1);
+	if (check_equal_lines(game->map) == 1)
+		return (1);
+	if (check_walls(game->map) == 1)
+	{
+		throw_error("Map must be surrounded by walls\n");
+		return (1);
+	}
+	if (check_content(game) == 1)
+		return (1);
+	return (0);
 }

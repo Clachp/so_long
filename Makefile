@@ -12,7 +12,8 @@ SRCS=		main.c \
 			check_map.c \
 			init_map.c \
 			interactions.c \
-			clean_game.c
+			clean_game.c \
+			error.c
 
 OBJ_DIR=	obj
 

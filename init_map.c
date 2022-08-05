@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 19:41:01 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/05 18:49:27 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ char	**get_map(char *file)
 	char	*stash;
 	char	**result;
 
-	if (check_input(file) == 1)
-		return (ft_putstr_fd("wrong input format\n", 1), NULL);
 	fd = open(file, O_RDONLY);
 	if (fd < 1)
-		return (ft_putstr_fd("Error opening file in get_map\n", 1), NULL);
+		return (NULL);
 	line = "";
 	stash = ft_strdup("");
 	while (line)
@@ -34,10 +32,10 @@ char	**get_map(char *file)
 		stash = ft_gnl_strjoin(stash, line);
 		free(line);
 	}
+	free(line);
 	close(fd);
 	result = ft_split(stash, '\n');
-	free(stash);
-	return (result);
+	return (free(stash), result);
 }
 
 int	get_window(t_game *game)
@@ -52,9 +50,6 @@ int	get_window(t_game *game)
 		x = 0;
 		while (*(*(game->map + y) + x))
 			x++;
-		if (game->map[y + 1] && \
-		ft_strlen(game->map[y]) != ft_strlen(game->map[y + 1]))
-			return (ft_putstr_fd("unequal lines", 1), 1);
 		y++;
 	}
 	game->floor.img = mlx_xpm_file_to_image(game->mlx, "./assets/grass.xpm", \
@@ -65,7 +60,10 @@ int	get_window(t_game *game)
 	game->height = game->floor.height * y;
 	game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
 	if (game->width <= game->height)
+	{
+		throw_error("Map is not a rectangle\n");
 		return (1);
+	}
 	return (0);
 }
 
@@ -75,7 +73,7 @@ int	get_images(t_game *game)
 	&game->wall.width, &game->wall.height);
 	if (!game->wall.img)
 		return (1);
-	game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assets/shoe.xpm", \
+	game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assest/shoe.xpm", \
 	&game->coll.width, &game->coll.height);
 	if (!game->coll.img)
 		return (1);
@@ -123,18 +121,20 @@ void	init_map(t_game *game, char *file)
 	game->map = get_map(file);
 	if (!game->map)
 	{
-		printf("error getting map\n");
-		exit(1);
-	}	
+		printf("Error getting map\n");
+		exit (EXIT_FAILURE);
+	}
 	if (check_map (game) == 1)
 	{
 		free_map(game->map);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
-	if (check_map(game) == 0)
+	if (get_window(game) == 1 || get_images(game) == 1)
 	{
-		get_window(game);
-		get_images(game);
-		put_images(game);
+		free_map(game->map);
+		throw_error("Error loading assets\n");
+		exit(EXIT_FAILURE);
 	}
+	else
+		put_images(game);
 }

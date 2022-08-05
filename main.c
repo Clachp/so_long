@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:25:18 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/04 20:15:17 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/05 18:50:21 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	init_game(t_game *game, char *file)
 int	close_game(t_game *game)
 {
 	free_map(game->map);
+	free(game->file);
 	destroy_images(game);
 	destroy_window(game);
 	mlx_loop_end(game->mlx);
@@ -36,12 +37,17 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
+	game.file = "";
 	if (argc == 2)
 	{
-		init_game(&game, argv[1]);
-		mlx_loop(game.mlx);
+		game.file = check_input(argv[1]);
+		if (game.file)
+		{
+			init_game(&game, game.file);
+			mlx_loop(game.mlx);
+		}
 	}
 	else
-		printf("Wrong argument number !\n");
+		throw_error("Wrong argument number\n");
 	return (0);
 }
