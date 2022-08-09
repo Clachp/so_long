@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/05 18:49:27 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/09 12:38:14 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	get_window(t_game *game)
 	game->win = mlx_new_window(game->mlx, game->width, game->height, TITLE);
 	if (game->width <= game->height)
 	{
-		throw_error("Map is not a rectangle\n");
+		throw_error("Wrong map shape\n");
 		return (1);
 	}
 	return (0);
@@ -73,7 +73,7 @@ int	get_images(t_game *game)
 	&game->wall.width, &game->wall.height);
 	if (!game->wall.img)
 		return (1);
-	game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assest/shoe.xpm", \
+	game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assets/shoe.xpm", \
 	&game->coll.width, &game->coll.height);
 	if (!game->coll.img)
 		return (1);
@@ -121,7 +121,7 @@ void	init_map(t_game *game, char *file)
 	game->map = get_map(file);
 	if (!game->map)
 	{
-		printf("Error getting map\n");
+		throw_error("Error getting map\n");
 		exit (EXIT_FAILURE);
 	}
 	if (check_map (game) == 1)

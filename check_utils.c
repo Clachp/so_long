@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/05 18:44:17 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/09 12:14:34 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ int	check_line(char *line)
 	int	i;
 
 	i = 0;
-/*	if (line[i] == '\n')
-	{
-		throw_error("Empty file\n");
-		return (1);
-	}	*/
 	while (line && line[i])
 	{
 		if (line[i] != '1')
@@ -60,14 +55,17 @@ int	check_equal_lines(char **map)
 
 	y = 0;
 	if (!map[y])
+	{
+		throw_error("Empty map\n");
 		return (1);
+	}
 	while (map[y] != NULL)
 	{
 		if (map[y + 1] && (ft_strlen(map[y]) != ft_strlen(map[y + 1])))
 		{
 			throw_error("unequal lines\n");
 			return (1);
-		}			
+		}		
 		y++;
 	}
 	return (0);

@@ -6,31 +6,47 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/05 17:14:06 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/09 17:53:29 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+int	handle_exit(t_game *game, int x, int y)
+{
+	if (game->coll.nbr == 0)
+	{
+		*(*(game->map + y) + x) = 'P';
+		*(*(game->map + game->player.y) + game->player.x) = '0';
+		score_message(game);
+		close_game(game);
+	}
+	else
+	{
+		ft_putstr_fd("You misssed some collectibles !\n", 1);
+		return (1);
+	}
+	return (0);
+}
+
 int	move_player(t_game *game, int x, int y)
 {
 	if (*(*(game->map + y) + x) == '1')
-		throw_error("Wall !\n");
+	{
+		ft_putstr_fd("Wall !\n", 1);
+		return (1);
+	}
 	if (*(*(game->map + y) + x) == 'C')
-		game->coll.nbr--;
+		game->coll.nbr--;	
 	if (*(*(game->map + y) + x) == 'E')
 	{
-		if (game->coll.nbr == 0)
-			printf("You won in %d moves!\n", game->move);
-		else
-			printf("you lost\n");
-		// lancer animation fin du jeu
-		close_game(game);
+		if (handle_exit(game, x, y) == 0)
+		return (1);
 	}
 	*(*(game->map + y) + x) = 'P';
 	*(*(game->map + game->player.y) + game->player.x) = '0';
 	game->move++;
-	printf("moves : %d\n", game->move);
+	move_nbr(game->move);
 	return (0);
 }
 

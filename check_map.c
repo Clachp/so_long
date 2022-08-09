@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/05 18:48:16 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/09 12:42:21 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,30 +78,24 @@ int	check_content(t_game *game)
 		x = 0;
 		while (*(*(game->map + y) + x))
 		{
-			if (check_char(*(*(game->map + y) + x)) == 1)
-				return (1);
+
 			if (*(*(game->map + y) + x) == 'C')
 				game->coll.nbr++;
 			if (*(*(game->map + y) + x) == 'E')
 				game->exit.nbr++;
+			if (check_char(*(*(game->map + y) + x)) == 1)
+			{
+				throw_error("Unknown character in map\n");
+				return (1);
+			}	
 			x++;
 		}
 		y++;
 	}
-	if (check_player_position(game) == 0)
-		return(1);
-	if (game->coll.nbr == 0)
-	{
-		throw_error("Collectibles missing\n");
+	if (check_player_position(game) == 0 || game->coll.nbr == 0 \
+	|| game->exit.nbr == 0)
 		return (1);
-	}
-	if (game->exit.nbr == 0)
-	{
-		throw_error("No exit in map\n");
-		return (1);
-	}
 	return (0);
-//fonction trop longue
 }
 
 int	check_map(t_game *game)
@@ -114,6 +108,12 @@ int	check_map(t_game *game)
 		return (1);
 	}
 	if (check_content(game) == 1)
+	{
+		if (game->coll.nbr == 0)
+			throw_error("Collectibles missing\n");
+		if (game->exit.nbr == 0)
+			throw_error("No exit in map\n");
 		return (1);
+	}
 	return (0);
 }

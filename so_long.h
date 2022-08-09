@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/05 17:09:25 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/09 15:30:23 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	get_player(t_game *game, int x, int y);
 void	get_collectible(t_game *game, int x, int y);
 void	get_exit(t_game *game, int x, int y);
 void	throw_error(char *message);
+void    move_nbr(int nbr);
+void    score_message(t_game *game);
 char	*check_input(char *input);
 int	check_equal_lines(char **map);
 
