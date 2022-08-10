@@ -13,7 +13,7 @@ SRCS=		main.c \
 			init_map.c \
 			interactions.c \
 			clean_game.c \
-			error.c
+			message.c
 
 OBJ_DIR=	obj
 
@@ -25,6 +25,7 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJ)
 	@make --no-print-directory -C libft
+	@make --no-print-directory -C mlx
 	@echo "So long, Marianne"
 	@$(CC) -g3 -o $(NAME) $(OBJ) -I. -Imlx -Llibft -lft -Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz 
 
@@ -32,6 +33,7 @@ all : $(NAME)
 
 clean :
 	@make --no-print-directory fclean -C libft
+	@make --no-print-directory clean -C mlx
 	@$(RM) $(OBJ_DIR)/
 
 fclean : clean

@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/09 12:42:21 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/10 11:56:54 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_walls(char **map)
 			x++;
 		}
 		if (map[y + 1] && (ft_strlen(map[y]) != ft_strlen(map[y + 1])))
-			return (1);	
+			return (1);
 		y++;
 	}
 	if (check_line(*(map + y - 1)) == 1)
@@ -78,16 +78,12 @@ int	check_content(t_game *game)
 		x = 0;
 		while (*(*(game->map + y) + x))
 		{
-
 			if (*(*(game->map + y) + x) == 'C')
 				game->coll.nbr++;
 			if (*(*(game->map + y) + x) == 'E')
 				game->exit.nbr++;
 			if (check_char(*(*(game->map + y) + x)) == 1)
-			{
-				throw_error("Unknown character in map\n");
-				return (1);
-			}	
+				return (throw_error("Unknown character in map\n"), 1);
 			x++;
 		}
 		y++;

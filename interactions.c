@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/09 17:53:29 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/10 12:03:02 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	move_player(t_game *game, int x, int y)
 		return (1);
 	}
 	if (*(*(game->map + y) + x) == 'C')
-		game->coll.nbr--;	
+		game->coll.nbr--;
 	if (*(*(game->map + y) + x) == 'E')
 	{
-		if (handle_exit(game, x, y) == 0)
-		return (1);
+		if (handle_exit(game, x, y) == 1)
+			return (1);
 	}
 	*(*(game->map + y) + x) = 'P';
 	*(*(game->map + game->player.y) + game->player.x) = '0';

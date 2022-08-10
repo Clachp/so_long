@@ -6,31 +6,31 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:27:21 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/09 15:30:23 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/10 12:11:01 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
-#define SO_LONG_H
+# define SO_LONG_H
 
-#include <stdlib.h>
-#include <X11/X.h>
-#include <stdio.h>
-#include <X11/keysym.h>
-#include "mlx/mlx.h"
-#include "mlx/mlx_int.h"
-#include "libft/libft.h"
-#include <sys/types.h>
-#include <fcntl.h>
+# include <stdlib.h>
+# include <X11/X.h>
+# include <stdio.h>
+# include <X11/keysym.h>
+# include "mlx/mlx.h"
+# include "mlx/mlx_int.h"
+# include "libft/libft.h"
+# include <sys/types.h>
+# include <fcntl.h>
 
-#define TITLE "SO LONG"
+# define TITLE "SO LONG"
 
 typedef struct s_pic {
 	void	*img;
 	int		width;
 	int		height;
 	int		nbr;
-	int 	x;
+	int		x;
 	int		y;
 }	t_pic;
 
@@ -47,27 +47,27 @@ typedef struct s_game {
 	t_pic	coll;
 	t_pic	player;
 	t_pic	exit;
-}	t_game; 
+}	t_game;
 
-int check_map(t_game *game);
-int check_line (char *line);
-int check_char(char c);
-int	put_images(t_game *game);
-void init_map (t_game *game, char *file);
-void handle_mlx_hooks(t_game *game);
-void free_map(char **map);
-void destroy_images(t_game *game);
+int		check_map(t_game *game);
+int		check_line(char *line);
+int		check_char(char c);
+int		put_images(t_game *game);
+void	init_map(t_game *game, char *file);
+void	handle_mlx_hooks(t_game *game);
+void	free_map(char **map);
+void	destroy_images(t_game *game);
 void	destroy_window(t_game *game);
-int	close_game(t_game *game);
+int		close_game(t_game *game);
 void	get_floor(t_game *game, int x, int y);
 void	get_wall(t_game *game, int x, int y);
 void	get_player(t_game *game, int x, int y);
 void	get_collectible(t_game *game, int x, int y);
 void	get_exit(t_game *game, int x, int y);
 void	throw_error(char *message);
-void    move_nbr(int nbr);
-void    score_message(t_game *game);
+void	move_nbr(int nbr);
+void	score_message(t_game *game);
 char	*check_input(char *input);
-int	check_equal_lines(char **map);
+int		check_equal_lines(char **map);
 
 #endif
