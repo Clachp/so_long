@@ -6,7 +6,7 @@
 /*   By: cchapon <cchapon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 16:19:37 by cchapon           #+#    #+#             */
-/*   Updated: 2022/08/10 20:21:04 by cchapon          ###   ########.fr       */
+/*   Updated: 2022/08/11 16:19:53 by cchapon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int	get_images(t_game *game)
 	&game->wall.width, &game->wall.height);
 	if (!game->wall.img)
 		return (1);
-	game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assets/egg.xpm", \
+	game->coll.img = mlx_xpm_file_to_image(game->mlx, "./assets/sneaker.xpm", \
 	&game->coll.width, &game->coll.height);
 	if (!game->coll.img)
 		return (1);
-	game->player.img = mlx_xpm_file_to_image(game->mlx, "./assets/Yoshi.xpm", \
+	game->player.img = mlx_xpm_file_to_image(game->mlx, "./assets/loki.xpm", \
 	&game->player.width, &game->player.height);
 	if (!game->floor.img)
 		return (1);
